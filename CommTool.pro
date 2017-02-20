@@ -28,14 +28,16 @@ SOURCES += main.cpp \
     serialportwidget.cpp \
     serialportwindow.cpp \
     commtooldlg.cpp \
-    tcpipwindow.cpp
+    tcpipwindow.cpp \
+    datachange.cpp
 
 HEADERS  += \
     serialportwidget.h \
     serialportwindow.h \
     commtooldlg.h \
     tcpipwindow.h \
-    language.h
+    language.h \
+    datachange.h
 
 FORMS    += \
     serialportwindow.ui \

@@ -2,19 +2,17 @@
 #include <QString>
 #include <QMessageBox>
 #include "language.h"
-#include <QtCore/QDebug>
 
 SerialPortWidget::SerialPortWidget(QWidget *parent) : QWidget(parent)
 {
     serial = new QSerialPort(this);
-    byte = "";
+    byteRead = "";
     connect(serial,SIGNAL(readyRead()),this,SIGNAL(serialReadReady()));
 }
 
 SerialPortWidget::~SerialPortWidget()
 {
     serial->close();
-    delete serial;
 }
 
 void SerialPortWidget::setPortName(const QString &portName)      //配置端口号
@@ -172,9 +170,9 @@ void SerialPortWidget::serialPortRead(QString &readString,QString prefix,QString
     }
     if(prefix.isEmpty() && suffix.isEmpty())
     {//如果无前缀无后缀，直接读取返回
-        byte = serial->readAll();
-        readString = QString(byte);
-        byte = "";
+        byteRead = serial->readAll();
+        readString = QString(byteRead);
+        byteRead = "";
         return;
     }
     QByteArray pre = prefix.toLatin1();     //获得前缀
@@ -182,34 +180,34 @@ void SerialPortWidget::serialPortRead(QString &readString,QString prefix,QString
     QByteArray byteBuf;     //接收数据缓冲区
 
     byteBuf = serial->readAll();
-    byte.append(byteBuf);
+    byteRead.append(byteBuf);
     /*判断是否接收完毕*/
     if(!prefix.isEmpty() && suffix.isEmpty())
     {   //如果有前缀无后缀
-        if(byte.contains(pre))
+        if(byteRead.contains(pre))
         {
-            readString = QString(byte);
-            byte = "";
+            readString = QString(byteRead);
+            byteRead = "";
             return;
         }
     }
     else
         if(prefix.isEmpty() && !suffix.isEmpty())
         {   //如果无前缀有后缀
-            if(byte.contains(suf))
+            if(byteRead.contains(suf))
             {
-                readString = QString(byte);
-                byte = "";
+                readString = QString(byteRead);
+                byteRead = "";
                 return;
             }
         }
         else
             if(!prefix.isEmpty() && !suffix.isEmpty())
             {   //如果有前缀有后缀
-                if(byte.contains(pre) && byte.contains(suf))
+                if(byteRead.contains(pre) && byteRead.contains(suf))
                 {
-                    readString = QString(byte);
-                    byte = "";
+                    readString = QString(byteRead);
+                    byteRead = "";
                     return;
                 }
             }
@@ -221,6 +219,6 @@ void SerialPortWidget::serialPortWrite(QString writeString)
 {
     if(writeString.isEmpty())
         return;
-    QByteArray byte = writeString.toLatin1();
-    serial->write(byte);
+    QByteArray byteWrite = writeString.toLatin1();
+    serial->write(byteWrite);
 }

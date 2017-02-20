@@ -8,8 +8,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QFileDialog>
-#include <QTimer>
-#include <QtCore/QDebug>
+//#include <QtCore/QDebug>
 
 SerialPortWindow::SerialPortWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,7 +18,6 @@ SerialPortWindow::SerialPortWindow(QWidget *parent) :
     serialPort = new SerialPortWidget(this);
     serialPortIsOpen = false;
     repeatSendFlag = false;
-    showHex = false;
     getPortName();
     showStatusBar();
 
@@ -33,8 +31,6 @@ SerialPortWindow::SerialPortWindow(QWidget *parent) :
 SerialPortWindow::~SerialPortWindow()
 {
     serialPort->closeSerialPort();
-    delete serialPort;
-    delete timer;
     delete ui;
 }
 void SerialPortWindow::getPortName()
@@ -345,35 +341,32 @@ void SerialPortWindow::repeatSend()
     sendData();
 }
 
-void SerialPortWindow::Hex_To_String(QString &str)    //执行转换：例如"123"->"313233"
+void SerialPortWindow::Hex_To_String(QString &str)
 {
     if(!str.isEmpty())
     {
-        QByteArray byte = str.toLatin1().toHex();
-        QString strTemp(byte); //转换十六进制字符串显示
-        int length = strTemp.length();      //字符串长度
-        int position = 2;   //插入起始位置
-        while (position<length)     //添加空格显示
-        {
-            strTemp.insert(position," ");
-            length = strTemp.length();
-            position += 3;
-        }
-        str = strTemp + " ";
-        str = str.toUpper(); //转换成大写字符
+        QByteArray byte = str.toLatin1();
+        char *buf = byte.data();            //转换前的数据
+        int index = 0;                      //转换的初始位
+        char *ptr = new char;               //转换后的数据
+        int len = str.length();             //数据转换前的长度
+        //执行转换：例如"123"->"31 32 33 "
+        dChange.hex_to_str(ptr,index,buf,len);
+
+        str = QString(ptr);
     }
 }
 
-void SerialPortWindow::String_To_Hex(QString &str)    //执行转换：例如"313233"->"123"
+void SerialPortWindow::String_To_Hex(QString &str)
 {
-    char *buffer = new char;    //存储转换后的数据
-    char *cBuf = new char;      //存储转换前的数据
-    int length = str.length();  //需要转换的字符串长度
     QByteArray byte = str.toLatin1();
-    cBuf = byte.data();
+    char *ch = byte.data();             //转换前的数据
+    char *cbuf = new char;              //转换后的数据
+    int len = str.length();             //数据转换前的字符串长度
+    //执行转换：例如"31 32 33 "->"123"
+    dChange.str_to_hex(ch,cbuf,len);
 
-    str_to_hex(cBuf,buffer,length);     //执行转换：例如"313233"->"123"
-    str = QString(buffer);
+    str = QString(cbuf);
 }
 
 void SerialPortWindow::on_loadFileBtn_clicked()
@@ -429,78 +422,6 @@ void SerialPortWindow::statusBarBtnClicked()
     statusBarLabel2->setText(tr("接收：%1").arg(receiveDataLength));
 }
 
-int SerialPortWindow::str_to_hex(char *ch,char *cbuf, int len)
-{//执行转换：例如"313233"->"123"
-    char high, low;
-    int idx, ii=0;
-    for (idx=0; idx<len; idx+=3)
-    {
-        high = ch[idx];
-        low = ch[idx+1];
-
-        if(high>='0' && high<='9')
-            high = high-'0';
-        else if(high>='A' && high<='F')
-            high = high - 'A' + 10;
-        else if(high>='a' && high<='f')
-            high = high - 'a' + 10;
-        else
-            return -1;
-
-        if(low>='0' && low<='9')
-            low = low-'0';
-        else if(low>='A' && low<='F')
-            low = low - 'A' + 10;
-        else if(low>='a' && low<='f')
-            low = low - 'a' + 10;
-        else
-            return -1;
-
-        cbuf[ii++] = high<<4 | low;
-    }
-    cbuf[ii]='\0';      //添加结束符'\0'
-    return 0;
-}
-
-int SerialPortWindow::hex_to_str(char *ptr,int index,char *buf,int len)
-{//执行转换：例如"123"->"313233"
-    QString strTemp(buf);
-    qDebug()<<strTemp;
-    int size=0;
-    ptr+=index;
-    for(int i = 0; i < len; i++)
-    {
-        if(i==len-1)
-        {
-            sprintf(ptr, "%02x",buf[i]);
-            ptr += 2;
-            size+=2;
-        }
-        else if (i==0)
-        {
-             if(index!=0)
-             {
-                    sprintf(ptr, ",%02x,",buf[i]);
-                    ptr += 4;
-                    size+=4;
-             }
-             else
-             {
-                    sprintf(ptr, "%02x,",buf[i]);
-                    ptr += 3;
-                    size+=3;
-             }
-        }
-        else
-        {
-           sprintf(ptr, "%02x,",buf[i]);
-           ptr += 3;
-           size+=3;
-        }
-    }
-    return size;
-}
-
 /*重载事件过滤器*/
 bool SerialPortWindow::eventFilter(QObject *obj, QEvent *event)
 {
@@ -516,10 +437,9 @@ bool SerialPortWindow::eventFilter(QObject *obj, QEvent *event)
                 else if(keyEvent->key()>=Qt::Key_A && keyEvent->key()<=Qt::Key_F)
                     return false;
                 else if(keyEvent->key()==Qt::Key_Return || keyEvent->key()==Qt::Key_Backspace
-                        || keyEvent->key()==Qt::Key_CapsLock || keyEvent->key()==Qt::Key_Shift
-                        || keyEvent->key()==Qt::Key_Space || keyEvent->key()==Qt::Key_Up
-                        || keyEvent->key()==Qt::Key_Down || keyEvent->key()==Qt::Key_Left
-                        || keyEvent->key()==Qt::Key_Right)
+                        || keyEvent->key()==Qt::Key_CapsLock || keyEvent->key()==Qt::Key_Space
+                        || keyEvent->key()==Qt::Key_Up || keyEvent->key()==Qt::Key_Down
+                        || keyEvent->key()==Qt::Key_Left || keyEvent->key()==Qt::Key_Right)
                     return false;
                 else
                     return true;

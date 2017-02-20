@@ -28,7 +28,7 @@ private slots:
 
 private:
     QSerialPort *serial;
-    QByteArray byte;
+    QByteArray byteRead;    //存取串口读取的全部数据
 
     void setPortName(const QString &portName);
     void setBaudRate(int baudRate);

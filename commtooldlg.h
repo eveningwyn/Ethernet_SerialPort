@@ -2,7 +2,6 @@
 #define COMMTOOLDLG_H
 
 #include <QDialog>
-#include <QButtonGroup>
 
 namespace Ui {
 class CommToolDlg;
@@ -15,7 +14,7 @@ class CommToolDlg : public QDialog
 public:
     explicit CommToolDlg(QWidget *parent = 0);
     ~CommToolDlg();
-    int btnIndex;
+    int btnIndex;   //用于记录用户工具的选择
 
 private slots:
     void on_serialPortBtn_clicked();

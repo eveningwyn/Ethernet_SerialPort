@@ -6,20 +6,20 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    SerialPortWindow w;
-    TcpIpWindow t;
+    SerialPortWindow spw;
+    TcpIpWindow tiw;
     CommToolDlg commtooldlg;
-    if (commtooldlg.exec()==CommToolDlg::Accepted)
+    if (commtooldlg.exec() == CommToolDlg::Accepted)
     {
-        if(1==commtooldlg.btnIndex)
+        if(1 == commtooldlg.btnIndex)
         {
-            w.show();
+            spw.show();
             return a.exec();
         }
         else
-            if(2==commtooldlg.btnIndex)
+            if(2 == commtooldlg.btnIndex)
             {
-                t.show();
+                tiw.show();
                 return a.exec();
             }
     }

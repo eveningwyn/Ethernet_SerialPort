@@ -6,8 +6,8 @@
 #include <QTimer>
 #include <QLabel>
 #include <QPushButton>
-#include <string>
 #include <QKeyEvent>
+#include "datachange.h"
 
 namespace Ui {
 class SerialPortWindow;
@@ -24,10 +24,10 @@ public:
     bool initSerialPort();
     void sendData();
     void saveData();
-    void Hex_To_String(QString &str);   //执行转换：例如"123"->"313233"
-    void String_To_Hex(QString &str);   //执行转换：例如"313233"->"123"
-    int hex_to_str(char *ptr,int index, char *buf,int len);      //执行转换：例如"123"->"313233"
-    int str_to_hex(char *ch, char *cbuf, int len);               //执行转换：例如"313233"->"123"
+    //执行转换：例如"123"->"31 32 33 "
+    void Hex_To_String(QString &str);
+    //执行转换：例如"31 32 33 "->"123"
+    void String_To_Hex(QString &str);
 
 protected:
      bool eventFilter(QObject *obj, QEvent *event);
@@ -76,14 +76,14 @@ private:
     bool repeatSendFlag;
     QString fileName;
     QTimer *timer;
-    bool showHex;
     void showStatusBar();
     int receiveDataLength;
     int sendDataLength;
     QLabel *statusBarLabel1;
     QLabel *statusBarLabel2;
     QPushButton *statusBarBtn;
-    void get_prefix_suffix(QString &prefix,QString &suffix);
+    void get_prefix_suffix(QString &prefix,QString &suffix);    
+    DataChange dChange;
 };
 
 #endif // SERIALPORTWINDOW_H
