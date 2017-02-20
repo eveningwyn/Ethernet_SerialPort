@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CommToolDlg</class>
+ <widget class="QDialog" name="CommToolDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Adobe 宋体 Std L</family>
+    <pointsize>20</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>通讯调试助手</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QPushButton" name="serialPortBtn">
+      <property name="text">
+       <string>串口调试助手</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="tcpIpBtn">
+      <property name="text">
+       <string>TCP/IP调试助手</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>serialPortBtn</tabstop>
+  <tabstop>tcpIpBtn</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
