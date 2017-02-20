@@ -115,11 +115,18 @@ void SerialPortWidget::setStopBits(QString stopBit)       //配置停止位
 
     if(0<= str.indexOf("1",0))
         serial->setStopBits(QSerialPort::OneStop);
-    else {
-        if(0<= str.indexOf("2",0))
-            serial->setStopBits(QSerialPort::TwoStop);
-        else {
-            QMessageBox::warning(this,tr("SerialPort"),tr("StopBit Error!"),QMessageBox::Ok);
+    else
+    {
+        if(0<= str.indexOf("1.5",0))
+            serial->setStopBits(QSerialPort::OneAndHalfStop);
+        else
+        {
+            if(0<= str.indexOf("2",0))
+                serial->setStopBits(QSerialPort::TwoStop);
+            else
+            {
+                QMessageBox::warning(this,tr("SerialPort"),tr("StopBit Error!"),QMessageBox::Ok);
+            }
         }
     }
 }

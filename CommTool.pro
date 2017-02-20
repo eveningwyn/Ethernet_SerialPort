@@ -34,7 +34,8 @@ HEADERS  += \
     serialportwidget.h \
     serialportwindow.h \
     commtooldlg.h \
-    tcpipwindow.h
+    tcpipwindow.h \
+    language.h
 
 FORMS    += \
     serialportwindow.ui \
