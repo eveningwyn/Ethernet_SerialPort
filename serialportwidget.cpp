@@ -48,6 +48,7 @@ void SerialPortWidget::setBaudRate(int baudRate)      //配置波特率
         serial->setBaudRate(QSerialPort::Baud1200,QSerialPort::AllDirections);
         break;
     default:
+        QMessageBox::warning(this,tr("SerialPort"),tr("BaudRate Error!"),QMessageBox::Ok);
         break;
     }
 }

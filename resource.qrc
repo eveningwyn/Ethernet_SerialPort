@@ -4,5 +4,16 @@
         <file>res/Aladdin_lamp_red.png</file>
         <file>res/gtk-refresh.png</file>
         <file>res/mobile_data_48px.png</file>
+        <file>res/File_Server_24px.png</file>
+        <file>res/wicd_client_24px.png</file>
+        <file>res/3D_Delete_32px.png</file>
+        <file>res/3D_Shutdown_32px.png</file>
+        <file>res/close_32px_1.png</file>
+        <file>res/close_32px_2.png</file>
+        <file>res/connect_creating_32px.png</file>
+        <file>res/connect_no_32px.png</file>
+        <file>res/Delete_32px.png</file>
+        <file>res/door_exit_logout_32px_.png</file>
+        <file>res/network_disconnect_32px.png</file>
     </qresource>
 </RCC>

@@ -1,11 +1,10 @@
-﻿#include "datachange.h"
+﻿#ifndef STR_HEX_H
+#define STR_HEX_H
 
-DataChange::DataChange()
-{
+#include <stdio.h>
 
-}
 //执行转换：例如"123"->"31 32 33 "
-int DataChange::hex_to_str(char *ptr /*after*/, int index /*before index*/, char *buf /*before*/, int len /*length*/)
+int hex_to_str(char *ptr /*after*/, int index /*before index*/, char *buf /*before*/, int len /*length*/)
 {   //执行转换：例如"123"->"31 32 33 "
     int size=0;
     ptr+=index;
@@ -41,8 +40,9 @@ int DataChange::hex_to_str(char *ptr /*after*/, int index /*before index*/, char
     }
     return size;
 }
+
 //执行转换：例如"31 32 33 "->"123"
-int DataChange::str_to_hex(char *ch /*before*/, char *cbuf /*after*/, int len /*length*/)
+int str_to_hex(char *ch /*before*/, char *cbuf /*after*/, int len /*length*/)
 {   //执行转换：例如"31 32 33 "->"123"
     char high, low;
     int idx, ii=0;
@@ -74,3 +74,5 @@ int DataChange::str_to_hex(char *ch /*before*/, char *cbuf /*after*/, int len /*
     cbuf[ii]='\0';      //添加结束符'\0'
     return 0;
 }
+
+#endif // STR_HEX_H

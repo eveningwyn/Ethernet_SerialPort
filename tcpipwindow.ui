@@ -6,26 +6,289 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>550</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>TCP/IP调试助手 (作者evening_wen)</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QWidget" name="mainCentralwidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <property name="leftMargin">
+     <number>3</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QFrame" name="showFrame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="mainMenubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>550</width>
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="configMenu">
+    <property name="title">
+     <string>通讯配置</string>
+    </property>
+    <addaction name="createClientAction"/>
+    <addaction name="serverConnectAction"/>
+    <addaction name="separator"/>
+    <addaction name="startServerAction"/>
+    <addaction name="stopServerAction"/>
+    <addaction name="deleteServerAction"/>
+    <addaction name="separator"/>
+    <addaction name="clientConnectAction"/>
+    <addaction name="clientDisconnAction"/>
+    <addaction name="separator"/>
+    <addaction name="allDisconnAction"/>
+    <addaction name="separator"/>
+    <addaction name="deleteClientAction"/>
+    <addaction name="deletAllAction"/>
+    <addaction name="separator"/>
+    <addaction name="exitAction"/>
+   </widget>
+   <addaction name="configMenu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="mainStatusbar"/>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="createClientAction"/>
+   <addaction name="serverConnectAction"/>
+   <addaction name="separator"/>
+   <addaction name="startServerAction"/>
+   <addaction name="stopServerAction"/>
+   <addaction name="deleteServerAction"/>
+   <addaction name="separator"/>
+   <addaction name="clientConnectAction"/>
+   <addaction name="clientDisconnAction"/>
+   <addaction name="separator"/>
+   <addaction name="allDisconnAction"/>
+   <addaction name="separator"/>
+   <addaction name="deleteClientAction"/>
+   <addaction name="deletAllAction"/>
+   <addaction name="separator"/>
+   <addaction name="exitAction"/>
+  </widget>
+  <widget class="QDockWidget" name="connectModeDockWidget">
+   <property name="windowTitle">
+    <string>属性页</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="connectModeDockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QTreeWidget" name="modeTreeWidget">
+       <property name="columnCount">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="createClientAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/wicd_client_24px.png</normaloff>:/res/wicd_client_24px.png</iconset>
+   </property>
+   <property name="text">
+    <string>创建连接(&amp;C)</string>
+   </property>
+   <property name="statusTip">
+    <string>创建连接(C)</string>
+   </property>
+  </action>
+  <action name="serverConnectAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/File_Server_24px.png</normaloff>:/res/File_Server_24px.png</iconset>
+   </property>
+   <property name="text">
+    <string>创建服务器(&amp;S)</string>
+   </property>
+   <property name="statusTip">
+    <string>创建服务器(S)</string>
+   </property>
+  </action>
+  <action name="startServerAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/3D_Shutdown_32px.png</normaloff>:/res/3D_Shutdown_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>启动服务器(&amp;T)</string>
+   </property>
+   <property name="statusTip">
+    <string>启动服务器(T)</string>
+   </property>
+  </action>
+  <action name="stopServerAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/3D_Delete_32px.png</normaloff>:/res/3D_Delete_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>停止服务器(&amp;O)</string>
+   </property>
+   <property name="statusTip">
+    <string>停止服务器(O)</string>
+   </property>
+  </action>
+  <action name="deleteServerAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/Delete_32px.png</normaloff>:/res/Delete_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除服务器(&amp;R)</string>
+   </property>
+   <property name="statusTip">
+    <string>删除服务器(R)</string>
+   </property>
+  </action>
+  <action name="clientConnectAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/connect_creating_32px.png</normaloff>:/res/connect_creating_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>连接(&amp;N)</string>
+   </property>
+   <property name="statusTip">
+    <string>连接(N)</string>
+   </property>
+  </action>
+  <action name="clientDisconnAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/connect_no_32px.png</normaloff>:/res/connect_no_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>断开(&amp;N)</string>
+   </property>
+   <property name="statusTip">
+    <string>断开(N)</string>
+   </property>
+  </action>
+  <action name="allDisconnAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/network_disconnect_32px.png</normaloff>:/res/network_disconnect_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>全部断开(&amp;A)</string>
+   </property>
+   <property name="statusTip">
+    <string>全部断开(A)</string>
+   </property>
+  </action>
+  <action name="deleteClientAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/close_32px_1.png</normaloff>:/res/close_32px_1.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除连接(&amp;E)</string>
+   </property>
+   <property name="statusTip">
+    <string>删除连接(E)</string>
+   </property>
+  </action>
+  <action name="deletAllAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/close_32px_2.png</normaloff>:/res/close_32px_2.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除全部连接(&amp;L)</string>
+   </property>
+   <property name="statusTip">
+    <string>删除全部连接(L)</string>
+   </property>
+  </action>
+  <action name="exitAction">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/door_exit_logout_32px_.png</normaloff>:/res/door_exit_logout_32px_.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出(&amp;X)</string>
+   </property>
+   <property name="statusTip">
+    <string>退出应用(X)</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

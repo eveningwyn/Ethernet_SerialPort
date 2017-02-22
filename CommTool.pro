@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += serialport
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +30,7 @@ SOURCES += main.cpp \
     serialportwindow.cpp \
     commtooldlg.cpp \
     tcpipwindow.cpp \
-    datachange.cpp
+    tcpipsocket.cpp
 
 HEADERS  += \
     serialportwidget.h \
@@ -37,7 +38,8 @@ HEADERS  += \
     commtooldlg.h \
     tcpipwindow.h \
     language.h \
-    datachange.h
+    tcpipsocket.h \
+    str_hex.h
 
 FORMS    += \
     serialportwindow.ui \

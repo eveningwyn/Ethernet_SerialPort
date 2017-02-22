@@ -7,7 +7,6 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QKeyEvent>
-#include "datachange.h"
 
 namespace Ui {
 class SerialPortWindow;
@@ -82,8 +81,7 @@ private:
     QLabel *statusBarLabel1;
     QLabel *statusBarLabel2;
     QPushButton *statusBarBtn;
-    void get_prefix_suffix(QString &prefix,QString &suffix);    
-    DataChange dChange;
+    void get_prefix_suffix(QString &prefix,QString &suffix);
 };
 
 #endif // SERIALPORTWINDOW_H

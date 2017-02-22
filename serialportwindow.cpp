@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QFileDialog>
+#include "str_hex.h"
 //#include <QtCore/QDebug>
 
 SerialPortWindow::SerialPortWindow(QWidget *parent) :
@@ -351,7 +352,7 @@ void SerialPortWindow::Hex_To_String(QString &str)
         char *ptr = new char;               //转换后的数据
         int len = str.length();             //数据转换前的长度
         //执行转换：例如"123"->"31 32 33 "
-        dChange.hex_to_str(ptr,index,buf,len);
+        hex_to_str(ptr,index,buf,len);
 
         str = QString(ptr);
     }
@@ -364,7 +365,7 @@ void SerialPortWindow::String_To_Hex(QString &str)
     char *cbuf = new char;              //转换后的数据
     int len = str.length();             //数据转换前的字符串长度
     //执行转换：例如"31 32 33 "->"123"
-    dChange.str_to_hex(ch,cbuf,len);
+    str_to_hex(ch,cbuf,len);
 
     str = QString(cbuf);
 }
