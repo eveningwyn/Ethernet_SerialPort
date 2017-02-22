@@ -1,7 +1,8 @@
-#ifndef TCPIPWINDOW_H
+﻿#ifndef TCPIPWINDOW_H
 #define TCPIPWINDOW_H
 
 #include <QMainWindow>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class TcpIpWindow;
@@ -17,6 +18,8 @@ public:
 
 private:
     Ui::TcpIpWindow *ui;
+    QTreeWidgetItem *clientMode;
+    QTreeWidgetItem *serverMode;
 };
 
 #endif // TCPIPWINDOW_H

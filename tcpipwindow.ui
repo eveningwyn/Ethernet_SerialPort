@@ -146,6 +146,9 @@
      </property>
      <item row="0" column="0">
       <widget class="QTreeWidget" name="modeTreeWidget">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
        <property name="columnCount">
         <number>0</number>
        </property>
