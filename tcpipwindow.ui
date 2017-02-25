@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>450</height>
+    <width>672</width>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,37 +30,6 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="0" column="0">
-     <widget class="QFrame" name="showFrame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="mainMenubar">
@@ -68,7 +37,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>550</width>
+     <width>672</width>
      <height>23</height>
     </rect>
    </property>
@@ -96,9 +65,9 @@
    <addaction name="configMenu"/>
   </widget>
   <widget class="QStatusBar" name="mainStatusbar"/>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="serverToolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>服务器工具栏</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -106,22 +75,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="createClientAction"/>
    <addaction name="serverConnectAction"/>
-   <addaction name="separator"/>
    <addaction name="startServerAction"/>
    <addaction name="stopServerAction"/>
    <addaction name="deleteServerAction"/>
-   <addaction name="separator"/>
-   <addaction name="clientConnectAction"/>
-   <addaction name="clientDisconnAction"/>
-   <addaction name="separator"/>
-   <addaction name="allDisconnAction"/>
-   <addaction name="separator"/>
-   <addaction name="deleteClientAction"/>
-   <addaction name="deletAllAction"/>
-   <addaction name="separator"/>
-   <addaction name="exitAction"/>
   </widget>
   <widget class="QDockWidget" name="connectModeDockWidget">
    <property name="windowTitle">
@@ -156,6 +113,23 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QToolBar" name="clientToolBar">
+   <property name="windowTitle">
+    <string>客户端工具栏</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="createClientAction"/>
+   <addaction name="clientConnectAction"/>
+   <addaction name="clientDisconnAction"/>
+   <addaction name="allDisconnAction"/>
+   <addaction name="deleteClientAction"/>
+   <addaction name="deletAllAction"/>
   </widget>
   <action name="createClientAction">
    <property name="icon">

@@ -1,6 +1,7 @@
 ﻿#ifndef SERIALPORTWIDGET_H
 #define SERIALPORTWIDGET_H
 
+/*需要在.pro文件添加QT += serialport*/
 #include <QWidget>
 #include <QSerialPort>
 #include <QSerialPortInfo>

@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     serialportwindow.cpp \
     commtooldlg.cpp \
     tcpipwindow.cpp \
-    tcpipsocket.cpp
+    tcpipserver.cpp \
+    tcpipclient.cpp
 
 HEADERS  += \
     serialportwidget.h \
@@ -38,8 +39,9 @@ HEADERS  += \
     commtooldlg.h \
     tcpipwindow.h \
     language.h \
-    tcpipsocket.h \
-    str_hex.h
+    str_hex.h \
+    tcpipserver.h \
+    tcpipclient.h
 
 FORMS    += \
     serialportwindow.ui \
