@@ -13,25 +13,7 @@
   <property name="windowTitle">
    <string>TCP/IP调试助手 (作者evening_wen)</string>
   </property>
-  <widget class="QWidget" name="mainCentralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <property name="leftMargin">
-     <number>3</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <property name="spacing">
-     <number>0</number>
-    </property>
-   </layout>
-  </widget>
+  <widget class="QWidget" name="mainCentralwidget"/>
   <widget class="QMenuBar" name="mainMenubar">
    <property name="geometry">
     <rect>
@@ -79,40 +61,6 @@
    <addaction name="startServerAction"/>
    <addaction name="stopServerAction"/>
    <addaction name="deleteServerAction"/>
-  </widget>
-  <widget class="QDockWidget" name="connectModeDockWidget">
-   <property name="windowTitle">
-    <string>属性页</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="connectModeDockWidgetContents">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QTreeWidget" name="modeTreeWidget">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="columnCount">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
   <widget class="QToolBar" name="clientToolBar">
    <property name="windowTitle">

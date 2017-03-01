@@ -8,9 +8,11 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QRadioButton>
+#include <QCheckBox>
 #include <QComboBox>
-
+#include <QGridLayout>
+#include <QTextBrowser>
+#include <QTextEdit>
 
 namespace Ui {
 class TcpIpWindow;
@@ -43,18 +45,35 @@ private:
     int clientWritelength;//客户端写入数据长度
 
     /*****界面布局对象*****/
-    QWidget *mainWidget;
-
+    void createWidget();
+    QGridLayout *mainLayout;
+//IP、端口号设置
     QGroupBox *ip_port_GroupBox;
+    QGridLayout *ip_port_SetGridLayout;
     QLabel *ipLabel;
     QLineEdit *ipLineEdit;
     QLabel *portLabel;
     QLineEdit *portLineEdit;
-    QRadioButton *portSetRadioBtn;
+    QCheckBox *portSetCheckBoxBtn;
     QLineEdit *portSetLineEdit;
     QPushButton *clientConnectBtn;
+//发送设置
+    QGroupBox *receiveSetGroupBox;
+    QGridLayout *receiveSetGridLayout;
 
+//接收设置
+    QGroupBox *sendSetGroupBox;
+    QGridLayout *sendSetGridLayout;
 
+//发送区域
+    QGroupBox *SendGroupBox;
+    QGridLayout *SendgridLayout;
+    QTextEdit *sendTextEdit;
+    QPushButton *sendBtn;
+//接收区域
+    QGroupBox *ReceiveGroupBox;
+    QGridLayout *ReceivegridLayout;
+    QTextBrowser *receiveShow;
 };
 
 #endif // TCPIPWINDOW_H
