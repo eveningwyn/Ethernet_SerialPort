@@ -79,8 +79,8 @@ void TcpIpWindow::createWidget()
     mainLayout->addWidget(sendSetGroupBox,3,0,1,1);
     mainLayout->addWidget(ReceiveGroupBox,0,1,5,1);
     mainLayout->addWidget(SendGroupBox,5,1,2,1);
-    ui->mainCentralwidget->setLayout(mainLayout);
-
+//    ui->mainCentralwidget->setLayout(mainLayout);
+    ui->tabServer->setLayout(mainLayout);
 }
 
 void TcpIpWindow::showServerReadData(QString IP,int Port,QString readMsg)
