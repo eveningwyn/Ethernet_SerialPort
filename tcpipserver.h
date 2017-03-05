@@ -13,6 +13,11 @@ public:
     bool stratListen(QString address,quint16 port); //监听连接
     void closeServerListen();
     void sendData(quint16 port,QString sendMsg);    //发送数据
+    int getClientID(QString IP,int Port);
+    QString prefix;
+    QString suffix;
+    void set_prefix_suffix(QString prefix,QString suffix);
+    TcpIpClient* getSocket(QString IPaddress, quint16 port);
 
 private:
     QList<TcpIpClient *> clientSocketList;  //保存客户端对象集合

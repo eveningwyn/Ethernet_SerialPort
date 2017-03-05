@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "tcpipserver.h"
+#include "tcpip_thread.h"
 
 namespace Ui {
 class TcpIpWindow;
@@ -15,6 +16,7 @@ class TcpIpWindow : public QMainWindow
 public:
     explicit TcpIpWindow(QWidget *parent = 0);
     ~TcpIpWindow();
+    Tcpip_Thread *tcpip_thread;
 
 private slots:
     void showServerReadData(QString IP,int Port,QString readMsg);
@@ -22,6 +24,22 @@ private slots:
     void showClientReadData(int clientID,QString IP,int Port,QString msg);
 
     void clientDisconnect(int clientID,QString IP,int Port);
+
+    void on_pushButtonListen_clicked();
+
+    void showErrorMsg(QString errorMsg);
+
+    void updateClientConnect(QString IP,int Port);
+
+    void updateClientDisconnected(QString IP,int Port);
+
+    void on_comboBoxServerClientIP_currentIndexChanged(int index);
+
+    void on_comboBoxServerClientPort_currentIndexChanged(int index);
+
+    void on_comboBoxServerPrefix_currentTextChanged(const QString &arg1);
+
+    void on_comboBoxServerSuffix_currentTextChanged(const QString &arg1);
 
 private:
     Ui::TcpIpWindow *ui;

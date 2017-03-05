@@ -23,7 +23,7 @@
    <string>串口调试助手 (作者evening_wen)</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resource.qrc">
+   <iconset>
     <normaloff>:/res/mobile_data_48px.png</normaloff>:/res/mobile_data_48px.png</iconset>
   </property>
   <property name="statusTip">
@@ -62,7 +62,7 @@
           <string>刷新</string>
          </property>
          <property name="icon">
-          <iconset resource="resource.qrc">
+          <iconset resource="../../../../../../YTL_Project/ICT_UR10/Program/ICT_UR10/resource.qrc">
            <normaloff>:/res/gtk-refresh.png</normaloff>:/res/gtk-refresh.png</iconset>
          </property>
         </widget>
@@ -251,7 +251,7 @@
           <string>打开串口</string>
          </property>
          <property name="icon">
-          <iconset resource="resource.qrc">
+          <iconset>
            <normaloff>:/res/Aladdin_lamp_red.png</normaloff>:/res/Aladdin_lamp_red.png</iconset>
          </property>
         </widget>
@@ -611,6 +611,12 @@
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu1">
+    <property name="title">
+     <string>1</string>
+    </property>
+   </widget>
+   <addaction name="menu1"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -653,8 +659,6 @@
   <tabstop>intervalTimeLineEdit</tabstop>
   <tabstop>dataBitComboBox</tabstop>
  </tabstops>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
