@@ -108,6 +108,11 @@ void TcpIpServer::set_prefix_suffix(QString prefix, QString suffix)
 {
     this->prefix = prefix;
     this->suffix = suffix;
+    for (int i=0;i<clientSocketID.count();i++)
+    {
+        clientSocketList[i]->prefix = prefix;
+        clientSocketList[i]->suffix = suffix;
+    }
 }
 
 TcpIpClient* TcpIpServer::getSocket(QString IPaddress, quint16 Port)

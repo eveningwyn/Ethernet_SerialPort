@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include "tcpipserver.h"
-#include "tcpip_thread.h"
+#include "serverobj.h"
+#include <QThread>
 
 namespace Ui {
 class TcpIpWindow;
@@ -16,22 +17,19 @@ class TcpIpWindow : public QMainWindow
 public:
     explicit TcpIpWindow(QWidget *parent = 0);
     ~TcpIpWindow();
-    Tcpip_Thread *tcpip_thread;
 
 private slots:
-    void showServerReadData(QString IP,int Port,QString readMsg);
 
-    void showClientReadData(int clientID,QString IP,int Port,QString msg);
+    void on_pushButtonListen_clicked();//监听
+    void showErrorMsg(QString errorMsg);//错误信息
+    void set_Listen_UI(bool status,QString btnText);
+    void show_Msg(QString Msg);
 
-    void clientDisconnect(int clientID,QString IP,int Port);
 
-    void on_pushButtonListen_clicked();
 
-    void showErrorMsg(QString errorMsg);
+    void setClientConnect(QString IP,int Port);
 
-    void updateClientConnect(QString IP,int Port);
-
-    void updateClientDisconnected(QString IP,int Port);
+    void setClientDisconnected(QString IP,int Port);
 
     void on_comboBoxServerClientIP_currentIndexChanged(int index);
 
@@ -43,12 +41,18 @@ private slots:
 
 private:
     Ui::TcpIpWindow *ui;
-    TcpIpServer *server;//服务器对象
+    ServerObj *serverObj;
+    QThread *thread1;
+
+
     TcpIpClient *client;//客户端对象
     int serverReadlength;//服务器读取数据长度
     int serverWritelength;//服务器写入数据长度
-    int clientReadlength;//客户端读取数据长度
-    int clientWritelength;//客户端写入数据长度
+
+
+signals:
+    void beginListen(QString ip,QString port,QString prefix,QString suffix);//服务器开始监听
+    void set_Server_Prefix_Suffix(QString prefix,QString suffix);
 };
 
 #endif // TCPIPWINDOW_H

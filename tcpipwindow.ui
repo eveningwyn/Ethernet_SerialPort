@@ -194,7 +194,7 @@
               </size>
              </property>
              <property name="text">
-              <string>开始倾听</string>
+              <string>Open</string>
              </property>
             </widget>
            </item>
@@ -382,6 +382,12 @@
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>

@@ -32,7 +32,7 @@ SOURCES += main.cpp \
     tcpipwindow.cpp \
     tcpipserver.cpp \
     tcpipclient.cpp \
-    tcpip_thread.cpp
+    serverobj.cpp
 
 HEADERS  += \
     serialportwidget.h \
@@ -43,7 +43,7 @@ HEADERS  += \
     str_hex.h \
     tcpipserver.h \
     tcpipclient.h \
-    tcpip_thread.h
+    serverobj.h
 
 FORMS    += \
     serialportwindow.ui \

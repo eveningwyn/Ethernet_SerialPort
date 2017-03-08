@@ -14,80 +14,39 @@ TcpIpWindow::TcpIpWindow(QWidget *parent) :
     ui->lineEditListenIP->setText("192.168.1.108");
     ui->lineEditListenPort->setText("4096");
 
-    server = new TcpIpServer(this);
-    tcpip_thread = new Tcpip_Thread(this);
+    serverObj = new ServerObj;
+    thread1 = new QThread;
+    serverObj->moveToThread(thread1);
 
+    connect(thread1,&QThread::started,serverObj,&ServerObj::init);
 
-    connect(server,SIGNAL(serverReadData(QString,int,QString)),this,SLOT(showServerReadData(QString,int,QString)));
-    connect(server,SIGNAL(clientConnect(QString,int)),this,SLOT(updateClientConnect(QString,int)));
-    connect(server,SIGNAL(clientDisconnected(QString,int)),this,SLOT(updateClientDisconnected(QString,int)));
+    connect(serverObj,&ServerObj::server_Error_Msg,this,&TcpIpWindow::showErrorMsg);
+    connect(serverObj,&ServerObj::update_Listen_UI,this,&TcpIpWindow::set_Listen_UI);
+    connect(serverObj,&ServerObj::server_Show_Msg,this,&TcpIpWindow::show_Msg);
+    connect(serverObj,&ServerObj::updateClientConnect,this,&TcpIpWindow::setClientConnect);
+    connect(serverObj,&ServerObj::updateClientDisconnected,this,&TcpIpWindow::setClientDisconnected);
 
-    tcpip_thread->start();
+    connect(this,&TcpIpWindow::beginListen,serverObj,&ServerObj::beginListening);
+    connect(this,&TcpIpWindow::set_Server_Prefix_Suffix,serverObj,&ServerObj::update_Server_Prefix_Suffix);
+
+    thread1->start();
 }
 
 TcpIpWindow::~TcpIpWindow()
 {
-    if(tcpip_thread->isRunning())
-        tcpip_thread->stop();
-    QThread::msleep(500);
-    delete tcpip_thread;
     delete ui;
-}
-
-void TcpIpWindow::showServerReadData(QString IP,int Port,QString readMsg)
-{
-}
-
-void TcpIpWindow::showClientReadData(int clientID,QString IP,int Port,QString msg)
-{
-}
-
-void TcpIpWindow::clientDisconnect(int clientID, QString IP, int Port)
-{
 }
 
 void TcpIpWindow::on_pushButtonListen_clicked()
 {
-    if(!server->isListening())
-    {
-        if(!server->stratListen(ui->lineEditListenIP->text(),(quint16)ui->lineEditListenPort->text().toInt()))
-        {
-            QMessageBox::warning(this,tr("Error"),tr("聆听失败！\n"),QMessageBox::Ok);
-            return;
-        }
+    QString ip = ui->lineEditListenIP->text();
+    QString port = ui->lineEditListenPort->text();
+    QString prefix = ui->comboBoxServerPrefix->currentText();
+    QString suffix = ui->comboBoxServerSuffix->currentText();
+    suffix.replace("\\r","\r");
+    suffix.replace("\\n","\n");
 
-        QString prefix = ui->comboBoxServerPrefix->currentText();
-        QString suffix = ui->comboBoxServerSuffix->currentText();
-        suffix.replace("\\r","\r");
-        suffix.replace("\\n","\n");
-        server->prefix = prefix;
-        server->suffix = suffix;
-
-        ui->pushButtonListen->setText(tr("倾听中..."));
-        ui->lineEditListenIP->setDisabled(true);
-        ui->lineEditListenPort->setDisabled(true);
-        QDateTime time = QDateTime::currentDateTime();
-        QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz") + "\n"
-                + ui->lineEditListenIP->text() + " "
-                + ui->lineEditListenPort->text() + " Listen...\n";
-        ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-        ui->textBrowserServerReceiveArea->insertPlainText(strTemp);
-        ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-    }
-    else
-    {
-        server->closeServerListen();
-        ui->pushButtonListen->setText(tr("开始倾听"));
-        ui->lineEditListenIP->setDisabled(false);
-        ui->lineEditListenPort->setDisabled(false);
-        QDateTime time = QDateTime::currentDateTime();
-        QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz") + "\n"
-                + ui->lineEditListenIP->text() + " "
-                + ui->lineEditListenPort->text() + " Stop listen.\n";
-        ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-        ui->textBrowserServerReceiveArea->insertPlainText(strTemp);
-        ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-    }
+    emit beginListen(ip, port, prefix, suffix);
 }
 
 void TcpIpWindow::showErrorMsg(QString errorMsg)
@@ -95,18 +54,30 @@ void TcpIpWindow::showErrorMsg(QString errorMsg)
     QMessageBox::warning(this,tr("Error"),QString("%1\n").arg(errorMsg),QMessageBox::Ok);
 }
 
-void TcpIpWindow::updateClientConnect(QString IP, int Port)
+void TcpIpWindow::set_Listen_UI(bool status, QString btnText)
+{
+    ui->pushButtonListen->setText(btnText);
+    ui->lineEditListenIP->setDisabled(status);
+    ui->lineEditListenPort->setDisabled(status);
+}
+
+void TcpIpWindow::show_Msg(QString Msg)
+{
+    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
+    ui->textBrowserServerReceiveArea->insertPlainText(Msg);
+    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
+}
+
+void TcpIpWindow::setClientConnect(QString IP, int Port)
 {
     ui->comboBoxServerClientIP->addItem(IP);
     ui->comboBoxServerClientPort->addItem(QString("%1").arg(Port));
     QDateTime time = QDateTime::currentDateTime();
-    QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz")+"\n"+IP+QString(" %1").arg(Port)+" Connected.\n";
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-    ui->textBrowserServerReceiveArea->insertPlainText(strTemp);
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
+    QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz")+"\n"+IP+QString(" %1").arg(Port)+" Connected\n";
+    show_Msg(strTemp);
 }
 
-void TcpIpWindow::updateClientDisconnected(QString IP, int Port)
+void TcpIpWindow::setClientDisconnected(QString IP, int Port)
 {
     int count = ui->comboBoxServerClientPort->count();
     QString ipTemp;
@@ -122,10 +93,8 @@ void TcpIpWindow::updateClientDisconnected(QString IP, int Port)
         }
     }
     QDateTime time = QDateTime::currentDateTime();
-    QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz")+"\n"+IP+QString(" %1").arg(Port)+" Disconnected.\n";
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-    ui->textBrowserServerReceiveArea->insertPlainText(strTemp);
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
+    QString strTemp = time.toString("yyyy-MM-dd hh:mm:ss.zzz")+"\n"+IP+QString(" %1").arg(Port)+" Disconnected\n";
+    show_Msg(strTemp);
 }
 
 void TcpIpWindow::on_comboBoxServerClientIP_currentIndexChanged(int index)
@@ -140,45 +109,10 @@ void TcpIpWindow::on_comboBoxServerClientPort_currentIndexChanged(int index)
 
 void TcpIpWindow::on_comboBoxServerPrefix_currentTextChanged(const QString &arg1)
 {
-    QString strTemp = arg1;
-
-    server->prefix = strTemp;
-    int count = ui->comboBoxServerClientPort->count();
-    QString ipTemp;
-    QString portTemp;
-    for(int i=0;i<count;i++)
-    {
-        ipTemp = ui->comboBoxServerClientIP->itemText(i);
-        portTemp = ui->comboBoxServerClientPort->itemText(i);
-        TcpIpClient *client = server->getSocket(ipTemp,(quint16)portTemp.toInt());
-        if(NULL==client)
-        {
-            QMessageBox::warning(this,tr("Error"),tr("设置数据规则时，客户端不存在！\n"),QMessageBox::Ok);
-            return;
-        }
-        client->prefix = strTemp;
-    }
+    emit set_Server_Prefix_Suffix(arg1,ui->comboBoxServerSuffix->currentText());
 }
 
 void TcpIpWindow::on_comboBoxServerSuffix_currentTextChanged(const QString &arg1)
 {
-    QString strTemp = arg1;
-    strTemp.replace("\\r","\r");
-    strTemp.replace("\\n","\n");
-    server->suffix = strTemp;
-    int count = ui->comboBoxServerClientPort->count();
-    QString ipTemp;
-    QString portTemp;
-    for(int i=0;i<count;i++)
-    {
-        ipTemp = ui->comboBoxServerClientIP->itemText(i);
-        portTemp = ui->comboBoxServerClientPort->itemText(i);
-        TcpIpClient *client = server->getSocket(ipTemp,(quint16)portTemp.toInt());
-        if(NULL==client)
-        {
-            QMessageBox::warning(this,tr("Error"),tr("设置数据规则时，客户端不存在！\n"),QMessageBox::Ok);
-            return;
-        }
-        client->suffix = strTemp;
-    }
+    emit set_Server_Prefix_Suffix(ui->comboBoxServerPrefix->currentText(),arg1);
 }
