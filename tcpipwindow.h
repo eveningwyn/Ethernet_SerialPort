@@ -39,6 +39,8 @@ private slots:
 
     void on_comboBoxServerSuffix_currentTextChanged(const QString &arg1);
 
+    void on_pushButtonServerSend_clicked();
+
 private:
     Ui::TcpIpWindow *ui;
     ServerObj *serverObj;
@@ -53,6 +55,7 @@ private:
 signals:
     void beginListen(QString ip,QString port,QString prefix,QString suffix);//服务器开始监听
     void set_Server_Prefix_Suffix(QString prefix,QString suffix);
+    void serverSend(quint16 port,QString msg);
 };
 
 #endif // TCPIPWINDOW_H

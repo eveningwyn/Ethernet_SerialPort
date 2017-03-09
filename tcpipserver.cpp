@@ -60,15 +60,17 @@ void TcpIpServer::disConnect(int clientID,QString IP,int Port)
 //指定客户端连接发消息
 void TcpIpServer::sendData(quint16 port, QString sendMsg)
 {
+    sendMsg = prefix + sendMsg +suffix;
     QByteArray sendByte = sendMsg.toLatin1();
     for (int i=0;i<clientSocketID.count();i++)
     {
         if (clientSocketList[i]->peerPort()==port)
         {
             clientSocketList[i]->write(sendByte);
-            break;
+            return;
         }
     }
+    emit errorMessage(tr("The port number does not exist!"));
 }
 
 bool TcpIpServer::stratListen(QString address,quint16 port)
@@ -106,6 +108,8 @@ int TcpIpServer::getClientID(QString IP, int Port)
 
 void TcpIpServer::set_prefix_suffix(QString prefix, QString suffix)
 {
+    suffix.replace("\\r","\r");
+    suffix.replace("\\n","\n");
     this->prefix = prefix;
     this->suffix = suffix;
     for (int i=0;i<clientSocketID.count();i++)

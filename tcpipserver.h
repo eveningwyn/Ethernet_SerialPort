@@ -12,7 +12,6 @@ public:
     explicit TcpIpServer(QObject *parent = 0);
     bool stratListen(QString address,quint16 port); //监听连接
     void closeServerListen();
-    void sendData(quint16 port,QString sendMsg);    //发送数据
     int getClientID(QString IP,int Port);
     QString prefix;
     QString suffix;
@@ -37,6 +36,7 @@ private slots:
     void disConnect(int clientID,QString IP,int Port);                      //获得已断开的客户端信息，并发送信号给上层调用
 
 public slots:
+    void sendData(quint16 port,QString sendMsg);    //发送数据
 
 };
 

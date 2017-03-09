@@ -28,6 +28,7 @@ TcpIpWindow::TcpIpWindow(QWidget *parent) :
 
     connect(this,&TcpIpWindow::beginListen,serverObj,&ServerObj::beginListening);
     connect(this,&TcpIpWindow::set_Server_Prefix_Suffix,serverObj,&ServerObj::update_Server_Prefix_Suffix);
+    connect(this,&TcpIpWindow::serverSend,serverObj,&ServerObj::serverSendMsg);
 
     thread1->start();
 }
@@ -114,5 +115,22 @@ void TcpIpWindow::on_comboBoxServerPrefix_currentTextChanged(const QString &arg1
 
 void TcpIpWindow::on_comboBoxServerSuffix_currentTextChanged(const QString &arg1)
 {
-    emit set_Server_Prefix_Suffix(ui->comboBoxServerPrefix->currentText(),arg1);
+    QString suffix = arg1;
+    if("none"==arg1)
+        suffix = QString("");
+    emit set_Server_Prefix_Suffix(ui->comboBoxServerPrefix->currentText(),suffix);
+}
+
+void TcpIpWindow::on_pushButtonServerSend_clicked()
+{
+    QString sendStr = ui->textEditServerSendInput->toPlainText();
+    if(""==sendStr)
+    {
+        return;
+    }
+    if(!ui->checkBoxServerLoopSend->isChecked())
+    {
+        qint16 port =ui->comboBoxServerClientPort->currentText().toInt();
+        emit serverSend(port,sendStr);
+    }
 }

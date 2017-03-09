@@ -19,6 +19,7 @@ signals:
     void server_Show_Msg(QString Msg);
     void updateClientConnect(QString IP,int Port);
     void updateClientDisconnected(QString IP,int Port);
+    void serverSendMsg(quint16 port,QString msg);
 
 public slots:
     void init();
