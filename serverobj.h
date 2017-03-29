@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "tcpipserver.h"
+#include <QTimer>
 
 class ServerObj : public QObject
 {
@@ -12,6 +13,10 @@ public:
 
 private:
     TcpIpServer *server;
+    quint16 port_loopSend;
+    QString msg_loopSend;
+    int time_loopSend;
+    QTimer *loopSendTimer;
 
 signals:
     void server_Error_Msg(QString errorMsg);
@@ -25,6 +30,9 @@ public slots:
     void init();
     void beginListening(QString ip,QString port,QString prefix,QString suffix);
     void update_Server_Prefix_Suffix(QString prefix,QString suffix);
+    void serverLoopSendMsg(quint16 port,QString msg,int loopTime);
+    void loopSendTimeout();
+    void stopLoopSend();
 
 private slots:
 };

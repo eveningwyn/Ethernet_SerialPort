@@ -1,5 +1,6 @@
 ﻿#include "tcpipserver.h"
 #include <QMessageBox>
+#include <QDateTime>
 
 TcpIpServer::TcpIpServer(QObject *parent):
     QTcpServer(parent)
@@ -34,6 +35,7 @@ void TcpIpServer::incomingConnection(qintptr socketDescriptor)
 
 void TcpIpServer::serverReadMsg(int clientID,QString IP,int Port,QString readMsg)
 {
+    emit serverShowMsg(forShowReceiveTime(Port,QString(readMsg)));
     clientID = 0;//此处不需此参数
     emit serverReadData(IP,Port,readMsg);
 }
@@ -67,6 +69,7 @@ void TcpIpServer::sendData(quint16 port, QString sendMsg)
         if (clientSocketList[i]->peerPort()==port)
         {
             clientSocketList[i]->write(sendByte);
+            emit serverShowMsg(forShowSendTime(port,QString(sendByte)));
             return;
         }
     }
@@ -129,4 +132,16 @@ TcpIpClient* TcpIpServer::getSocket(QString IPaddress, quint16 Port)
         }
     }
     return NULL;
+}
+
+QString TcpIpServer::forShowSendTime(int clientPort, QString msg)
+{
+    QString time = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss.zzz");
+    return QString("%1_Send to Client Port %2:%3").arg(time).arg(clientPort).arg(msg);
+}
+
+QString TcpIpServer::forShowReceiveTime(int clientPort, QString msg)
+{
+    QString time = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss.zzz");
+    return QString("%1_Receive from Client Port %2:%3").arg(time).arg(clientPort).arg(msg);
 }

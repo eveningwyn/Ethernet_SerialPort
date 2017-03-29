@@ -9,14 +9,14 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include "str_hex.h"
-//#include <QtCore/QDebug>
+//#include <QDebug>
 
 SerialPortWindow::SerialPortWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SerialPortWindow)
 {
     ui->setupUi(this);
-    serialPort = new SerialPortWidget(this);
+    serialPort = new SerialPortObj(this);
     serialPortIsOpen = false;
     repeatSendFlag = false;
     getPortName();
@@ -25,7 +25,6 @@ SerialPortWindow::SerialPortWindow(QWidget *parent) :
     timer = new QTimer(this);
     //关联定时器溢出信号和相应的槽函数
     connect(timer, SIGNAL(timeout()), this, SLOT(repeatSend()));
-
     connect(serialPort,SIGNAL(serialReadReady()),this,SLOT(ShowDataReceiveArea()));
 }
 

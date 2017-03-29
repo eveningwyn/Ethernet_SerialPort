@@ -2,7 +2,7 @@
 #define SERIALPORTWINDOW_H
 
 #include <QMainWindow>
-#include "serialportwidget.h"
+#include "serialportobj.h"
 #include <QTimer>
 #include <QLabel>
 #include <QPushButton>
@@ -69,7 +69,7 @@ private slots:
 private:
     Ui::SerialPortWindow *ui;
 
-    SerialPortWidget *serialPort;
+    SerialPortObj *serialPort;
     bool serialPortIsOpen;
     void getPortName();
     bool repeatSendFlag;

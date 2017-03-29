@@ -26,16 +26,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp \
-    serialportwidget.cpp \
     serialportwindow.cpp \
     commtooldlg.cpp \
     tcpipwindow.cpp \
     tcpipserver.cpp \
     tcpipclient.cpp \
-    serverobj.cpp
+    serverobj.cpp \
+    serialportobj.cpp
 
 HEADERS  += \
-    serialportwidget.h \
     serialportwindow.h \
     commtooldlg.h \
     tcpipwindow.h \
@@ -43,7 +42,8 @@ HEADERS  += \
     str_hex.h \
     tcpipserver.h \
     tcpipclient.h \
-    serverobj.h
+    serverobj.h \
+    serialportobj.h
 
 FORMS    += \
     serialportwindow.ui \
