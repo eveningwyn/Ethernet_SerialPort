@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>659</width>
+    <width>700</width>
     <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>700</width>
+    <height>60</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -21,10 +27,10 @@
   </property>
   <widget class="QWidget" name="mainCentralwidget">
    <layout class="QGridLayout" name="gridLayout_12">
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabServer">
        <attribute name="title">
@@ -43,13 +49,6 @@
            <string> 发送区</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_11">
-           <item row="0" column="8">
-            <widget class="QPushButton" name="pushButtonServerClear">
-             <property name="text">
-              <string>清空输入</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="3" colspan="4">
             <widget class="QCheckBox" name="checkBoxServerHexShow_Send">
              <property name="text">
@@ -57,7 +56,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="5">
+           <item row="2" column="5">
             <widget class="QLineEdit" name="lineEditServerIntervalTime">
              <property name="maximumSize">
               <size>
@@ -67,7 +66,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="6">
+           <item row="2" column="6">
             <widget class="QLabel" name="labelServer_ms">
              <property name="text">
               <string>ms</string>
@@ -81,7 +80,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="8">
+           <item row="3" column="8">
             <widget class="QPushButton" name="pushButtonServerSend">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -89,19 +88,41 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>发送</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="3">
+           <item row="2" column="3">
             <widget class="QLabel" name="labelServerIntervalTime">
              <property name="text">
               <string>间隔时间：</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0" rowspan="3" colspan="2">
+           <item row="2" column="2">
+            <widget class="QCheckBox" name="checkBoxServerLoopSend">
+             <property name="text">
+              <string>循环发送</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2" colspan="6">
+            <widget class="QTextEdit" name="textEditServerSendInput"/>
+           </item>
+           <item row="0" column="0" rowspan="4" colspan="2">
             <widget class="QGroupBox" name="groupBoxServerClientSelect">
              <property name="minimumSize">
               <size>
@@ -136,30 +157,26 @@
              </layout>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QCheckBox" name="checkBoxServerLoopSend">
+           <item row="0" column="8">
+            <widget class="QPushButton" name="pushButtonServerClear">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
-              <string>循环发送</string>
+              <string>清空输入</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="2" colspan="6">
-            <widget class="QTextEdit" name="textEditServerSendInput"/>
-           </item>
-           <item row="1" column="8">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="7">
+           <item row="0" column="7">
             <spacer name="horizontalSpacer">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -303,7 +320,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>304</height>
+            <height>204</height>
            </size>
           </property>
           <property name="title">
@@ -311,42 +328,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_10">
            <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBoxServerSaveToFile">
-             <property name="text">
-              <string>接收转向文件</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="checkBoxServerNextLineShow">
-             <property name="text">
-              <string>自动换行显示</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBoxServerHexShow_Receive">
-             <property name="text">
-              <string>十六进制显示</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButtonServerClearReceive">
-             <property name="text">
-              <string>清空接收</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="pushButtonServerSaveToFile">
-             <property name="text">
-              <string>保存数据</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="3">
-            <widget class="QTextBrowser" name="textBrowserServerReceiveArea"/>
+            <widget class="QWidget" name="widget_server" native="true"/>
            </item>
           </layout>
          </widget>
@@ -454,42 +436,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBoxClientSaveToFile">
-             <property name="text">
-              <string>接收转向文件</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="checkBoxClientNextLineShow">
-             <property name="text">
-              <string>自动换行显示</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBoxClientHexShow_Receive">
-             <property name="text">
-              <string>十六进制显示</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButtonClientClearReceive">
-             <property name="text">
-              <string>清空接收</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="3">
-            <widget class="QTextBrowser" name="textBrowserClientReceiveArea"/>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="pushButtonClientSaveToFile">
-             <property name="text">
-              <string>保存数据</string>
-             </property>
-            </widget>
+            <widget class="QWidget" name="widget_client" native="true"/>
            </item>
           </layout>
          </widget>
@@ -585,6 +532,18 @@
            </item>
            <item row="0" column="7">
             <widget class="QPushButton" name="pushButtonClientClearInput">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>清空输入</string>
              </property>
@@ -617,19 +576,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="7">
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="1" column="4">
             <widget class="QLabel" name="labelClient_ms">
              <property name="text">
@@ -644,6 +590,18 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16777215</height>
+              </size>
              </property>
              <property name="text">
               <string>发送</string>
@@ -685,7 +643,7 @@
              </layout>
             </widget>
            </item>
-           <item row="1" column="5">
+           <item row="0" column="6">
             <spacer name="horizontalSpacer_6">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -725,7 +683,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>659</width>
+     <width>700</width>
      <height>23</height>
     </rect>
    </property>
@@ -769,6 +727,18 @@
    <addaction name="deleteServerAction"/>
   </widget>
   <widget class="QToolBar" name="clientToolBar">
+   <property name="minimumSize">
+    <size>
+     <width>530</width>
+     <height>35</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>530</width>
+     <height>35</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>客户端工具栏</string>
    </property>

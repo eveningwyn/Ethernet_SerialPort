@@ -14,7 +14,10 @@ TcpIpWindow::TcpIpWindow(QWidget *parent) :
 
     ui->lineEditListenIP->setText("192.168.1.108");
     ui->lineEditListenPort->setText("4096");
-     ui->lineEditServerIntervalTime->setText("1000");
+    ui->lineEditServerIntervalTime->setText("1000");
+    ui->lineEditServerIP->setText("192.168.1.108");
+    ui->lineEditServerPort->setText("4096");
+    ui->lineEditClientIntervalTime->setText("1000");
 
     serverIsLoopSend = false;
 
@@ -22,11 +25,17 @@ TcpIpWindow::TcpIpWindow(QWidget *parent) :
     thread1 = new QThread;
     serverObj->moveToThread(thread1);
 
+    serverShowDlg = new TcpIpServerShowDialog((TcpIpServerShowDialog*) ui->groupBoxServerReceiveArea);
+    clientShowDlg = new TcpIpClientShowDialog((TcpIpClientShowDialog*) ui->groupBoxClientReceiveArea);
+    on_tabWidget_currentChanged(1);
+
     connect(thread1,&QThread::started,serverObj,&ServerObj::init);
+
+
+    connect(serverObj,&ServerObj::server_Show_Msg,serverShowDlg,&TcpIpServerShowDialog::show_Msg);
 
     connect(serverObj,&ServerObj::server_Error_Msg,this,&TcpIpWindow::showErrorMsg);
     connect(serverObj,&ServerObj::update_Listen_UI,this,&TcpIpWindow::set_Listen_UI);
-    connect(serverObj,&ServerObj::server_Show_Msg,this,&TcpIpWindow::show_Msg);
     connect(serverObj,&ServerObj::updateClientConnect,this,&TcpIpWindow::setClientConnect);
     connect(serverObj,&ServerObj::updateClientDisconnected,this,&TcpIpWindow::setClientDisconnected);
 
@@ -35,6 +44,7 @@ TcpIpWindow::TcpIpWindow(QWidget *parent) :
     connect(this,&TcpIpWindow::serverSend,serverObj,&ServerObj::serverSendMsg);
     connect(this,&TcpIpWindow::serverLoopSend,serverObj,&ServerObj::serverLoopSendMsg);
     connect(this,&TcpIpWindow::serverStopLoopSend,serverObj,&ServerObj::stopLoopSend);
+    connect(this,&TcpIpWindow::main_Show_Msg,serverShowDlg,&TcpIpServerShowDialog::show_Msg);
 
     thread1->start();
 }
@@ -68,24 +78,13 @@ void TcpIpWindow::set_Listen_UI(bool status, QString btnText)
     ui->lineEditListenPort->setDisabled(status);
 }
 
-void TcpIpWindow::show_Msg(QString Msg)
-{
-    if(ui->checkBoxServerNextLineShow->isChecked())
-    {
-        Msg += "\n";
-    }
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-    ui->textBrowserServerReceiveArea->insertPlainText(Msg);
-    ui->textBrowserServerReceiveArea->moveCursor(QTextCursor::End);
-}
-
 void TcpIpWindow::setClientConnect(QString IP, int Port)
 {
     ui->comboBoxServerClientIP->addItem(IP);
     ui->comboBoxServerClientPort->addItem(QString("%1").arg(Port));
     QString time = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss.zzz");
     QString strTemp =QString("%1\n%2 %3 Connected\n").arg(time).arg(IP).arg(Port);
-    show_Msg(strTemp);
+    emit main_Show_Msg(strTemp);
 }
 
 void TcpIpWindow::setClientDisconnected(QString IP, int Port)
@@ -105,7 +104,7 @@ void TcpIpWindow::setClientDisconnected(QString IP, int Port)
     }
     QString time = QDateTime::currentDateTime().toString("yyyyMMdd_hh:mm:ss.zzz");
     QString strTemp =QString("%1\n%2 %3 Disconnected\n").arg(time).arg(IP).arg(Port);
-    show_Msg(strTemp);
+    emit main_Show_Msg(strTemp);
 }
 
 void TcpIpWindow::on_comboBoxServerClientIP_currentIndexChanged(int index)
@@ -202,53 +201,25 @@ void TcpIpWindow::on_pushButtonServerClear_clicked()
     ui->textEditServerSendInput->clear();
 }
 
-void TcpIpWindow::on_pushButtonServerClearReceive_clicked()
+void TcpIpWindow::on_tabWidget_currentChanged(int index)
 {
-    ui->textBrowserServerReceiveArea->clear();
-}
+    serverShowDlg->hide();
+    clientShowDlg->hide();
 
-void TcpIpWindow::on_pushButtonServerSaveToFile_clicked()
-{
-    server_fileName = QFileDialog::getSaveFileName(this,tr("另存为"),"fileName.txt");
-    if(!server_fileName.isEmpty())
+    if(0==index)
     {
-        server_saveData(ui->textBrowserServerReceiveArea->toPlainText());
-        return;
-    }
-}
-
-void TcpIpWindow::server_saveData(QString msg)
-{
-    QFile file(server_fileName);
-    file.open(QFile::WriteOnly | QIODevice::Text);
-    QTextStream out(&file);
-    QApplication::setOverrideCursor(Qt::WaitCursor);    // 鼠标指针变为等待状态
-    out << msg;
-    QApplication::restoreOverrideCursor();              // 鼠标指针恢复原来的状态
-    file.close();
-}
-
-void TcpIpWindow::on_checkBoxServerSaveToFile_clicked()
-{
-    if(!(ui->checkBoxServerSaveToFile->isChecked()))
-    {
-        ui->pushButtonServerSaveToFile->setEnabled(true);
-        ui->pushButtonServerClearReceive->setEnabled(true);
+        QRect rect_Server = ui->groupBoxServerReceiveArea->rect();
+        serverShowDlg->show();
+        serverShowDlg->setGeometry(rect_Server);
     }
     else
     {
-        server_fileName = QFileDialog::getSaveFileName(this,tr("另存为"),"fileName.txt");
-        if(server_fileName.isEmpty())
+        if(1==index)
         {
-            ui->checkBoxServerSaveToFile->setChecked(false);
-            return;
+            QRect rect_Client = ui->groupBoxClientReceiveArea->rect();
+            clientShowDlg->show();
+            clientShowDlg->setGeometry(rect_Client);
         }
-        ui->pushButtonServerSaveToFile->setEnabled(false);
-        ui->pushButtonServerClearReceive->setEnabled(false);
     }
-}
 
-void TcpIpWindow::on_checkBoxServerHexShow_Receive_clicked()
-{
-    //待完善
 }

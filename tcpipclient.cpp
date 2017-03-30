@@ -10,6 +10,7 @@ TcpIpClient::TcpIpClient(QObject *parent) :
     suffix = "";
 
     connect(this,SIGNAL(readyRead()),this,SLOT(clientReadData()));
+    connect(this,SIGNAL(connected()),this,SIGNAL(clientConnected()));
     connect(this,SIGNAL(disconnected()),this,SLOT(DisConnect()));//关闭连接时，发送断开连接信号
     connect(this,SIGNAL(disconnected()),this,SLOT(deleteLater()));//关闭连接时，对象自动删除
 }
@@ -81,7 +82,10 @@ void TcpIpClient::newConnect(const QString address, quint16 port)
 //    this->abort();//关闭已有连接
     this->connectToHost(QHostAddress(address),port);
     if (!this->waitForConnected(3000))
+    {
         emit cliendErrorMsg(this->errorString()+"\n");
+        emit clientConnectTimeout();
+    }
 }
 
 void TcpIpClient::closeConnect()
@@ -95,6 +99,14 @@ bool TcpIpClient::bindClient(const QString address, quint16 port)
 {
     QHostAddress addr(address);
     if(this->bind(addr, port, DefaultForPlatform))
+        return true;
+
+    return false;
+}
+
+bool TcpIpClient::bindClient_port(quint16 port)
+{
+    if(this->bind(port, DefaultForPlatform))
         return true;
 
     return false;

@@ -32,7 +32,10 @@ SOURCES += main.cpp \
     tcpipserver.cpp \
     tcpipclient.cpp \
     serverobj.cpp \
-    serialportobj.cpp
+    serialportobj.cpp \
+    tcpipservershowdialog.cpp \
+    tcpipclientshowdialog.cpp \
+    clientobj.cpp
 
 HEADERS  += \
     serialportwindow.h \
@@ -43,12 +46,17 @@ HEADERS  += \
     tcpipserver.h \
     tcpipclient.h \
     serverobj.h \
-    serialportobj.h
+    serialportobj.h \
+    tcpipservershowdialog.h \
+    tcpipclientshowdialog.h \
+    clientobj.h
 
 FORMS    += \
     serialportwindow.ui \
     commtooldlg.ui \
-    tcpipwindow.ui
+    tcpipwindow.ui \
+    tcpipservershowdialog.ui \
+    tcpipclientshowdialog.ui
 
 RESOURCES += \
     resource.qrc

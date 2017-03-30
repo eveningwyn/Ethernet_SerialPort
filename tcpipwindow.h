@@ -5,6 +5,8 @@
 #include "tcpipserver.h"
 #include "serverobj.h"
 #include <QThread>
+#include "tcpipservershowdialog.h"
+#include "tcpipclientshowdialog.h"
 
 namespace Ui {
 class TcpIpWindow;
@@ -23,9 +25,6 @@ private slots:
     void on_pushButtonListen_clicked();//监听
     void showErrorMsg(QString errorMsg);//错误信息
     void set_Listen_UI(bool status,QString btnText);
-    void show_Msg(QString Msg);
-
-
 
     void setClientConnect(QString IP,int Port);
 
@@ -41,17 +40,11 @@ private slots:
 
     void on_pushButtonServerSend_clicked();
 
-    void on_pushButtonServerClearReceive_clicked();
-
-    void on_pushButtonServerSaveToFile_clicked();
-
-    void on_checkBoxServerSaveToFile_clicked();
-
     void on_pushButtonServerClear_clicked();
 
-    void on_checkBoxServerHexShow_Receive_clicked();
-
     void on_checkBoxServerHexShow_Send_clicked();
+
+    void on_tabWidget_currentChanged(int index);
 
 private:
     Ui::TcpIpWindow *ui;
@@ -62,8 +55,8 @@ private:
     TcpIpClient *client;//客户端对象
     int serverReadlength;//服务器读取数据长度
     int serverWritelength;//服务器写入数据长度
-    QString server_fileName;
-    void server_saveData(QString msg);
+    TcpIpServerShowDialog *serverShowDlg;
+    TcpIpClientShowDialog *clientShowDlg;
 
 signals:
     void beginListen(QString ip,QString port,QString prefix,QString suffix);//服务器开始监听
@@ -71,6 +64,7 @@ signals:
     void serverSend(quint16 port,QString msg);
     void serverLoopSend(quint16 port,QString msg,int loopTime);
     void serverStopLoopSend();
+    void main_Show_Msg(QString msg);
 };
 
 #endif // TCPIPWINDOW_H
